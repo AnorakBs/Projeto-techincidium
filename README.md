@@ -68,3 +68,6 @@ If you want to run only the MySQL table loading step:
 python load.py 1996-01-01 1996-12-31
 ```
 
+#Evidencia
+
+A evidencia da entrega final segundo os requirementos pode ser encontrado nos arquivos orders_leftjoin_order_details.csv e evidencia_query.png
