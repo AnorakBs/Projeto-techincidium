@@ -20,7 +20,7 @@ if result1.returncode == 0:
 else:
     print("First script failed to run. Check Logs")
 
-result2 = subprocess.run(["python", script_csv], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+result2 = subprocess.run(["python", script_csv, start_date], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 if result2.returncode == 0:
         print("Second script ran successfully.")

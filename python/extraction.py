@@ -63,13 +63,13 @@ try:
 
                 base_name, extention = os.path.splitext(sql_files[i])
                 
-                directory = f"{base_name}\\{current_date}"
+                directory = f"{base_name}\\{start_date}"
                 path = os.path.join(parent_dir,directory)
                 
                 if not os.path.exists(path):
                     os.makedirs(path,mode=0o777)
 
-                file_path = os.path.join(path,f'{base_name}_{current_date}.csv')
+                file_path = os.path.join(path,f'{base_name}_{start_date}.csv')
 
                 df.to_csv(file_path,mode='w', index=False,sep=',')
 

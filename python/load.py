@@ -42,11 +42,11 @@ try:
         for tabela in tabelas:
 
             if tabela != 'order_details':
-                file_path = os.path.join(os.getenv("PARENT_DIR"),f'{tabela}',f'{current_date}',f'{tabela}_{current_date}.csv')       
+                file_path = os.path.join(os.getenv("PARENT_DIR"),f'{tabela}',f'{start_date}',f'{tabela}_{start_date}.csv')       
                 print(file_path)
                 
             else:
-                file_path= os.path.join(os.getenv("ORDER_DETAILS_CSV"),f'{current_date}',f'{tabela}_{current_date}.csv')
+                file_path= os.path.join(os.getenv("ORDER_DETAILS_CSV"),f'{start_date}',f'{tabela}_{start_date}.csv')
                 print(file_path)
 
             df = pd.read_csv(file_path,sep=',')
@@ -72,28 +72,30 @@ try:
                 df['employee_id'] = df['employee_id'].astype(str)
                 df['territory_id'] = df['territory_id'].astype(str)
 
-            #INSERT OVERWRITE DA ORDER MAS N FUNFOU
-            #if tabela == 'orders':
-            #    delete = f"DELETE FROM indicium.{tabela} WHERE order_date between TO_DATE({start_date},'YYYY-MM-DD') AND TO_DATE({end_date},'YYYY-MM-DD')"
-            #    cur.execute(delete)
-            #    connection.commit()
-
             colunas = df.columns.to_list()
+            #INSERT OVERWRITE DA TABELA ORDERS
+            if tabela != 'orders':
+                delete = f'DELETE FROM indicium.{tabela}'
+                cur.execute(delete)
+                connection.commit()
 
-            #Insert overwrite
-            delete = f'DELETE FROM indicium.{tabela}'
-            cur.execute(delete)
-            connection.commit()
+                insert_query = f"INSERT INTO indicium.{tabela} ({', '.join(colunas)}) VALUES ({', '.join(['%s'] * len(colunas))})"
+                values = [tuple(row) for row in df.values]
+                print(insert_query)
 
-            insert_query = f"INSERT INTO indicium.{tabela} ({', '.join(colunas)}) VALUES ({', '.join(['%s'] * len(colunas))})"
-            values = [tuple(row) for row in df.values]
-            print(insert_query)
-
-            cur.executemany(insert_query, values)
-            connection.commit()
-
-            print(f'dados inseridos na tabela {tabela}')
-            logging.info(f'dados inseridos na tabela {tabela}')
+                cur.executemany(insert_query, values)
+                connection.commit()
+                print(f'dados inseridos na tabela {tabela}')
+                logging.info(f'dados inseridos na tabela {tabela}')
+            else:
+                delete = f"DELETE from indicium.orders WHERE order_date between '{start_date}' and '{end_date}'"
+                cur.execute(delete)
+                connection.commit()
+                insert_query = f"INSERT INTO indicium.orders ({', '.join(colunas)}) VALUES ({', '.join(['%s'] * len(colunas))})"
+                values = [tuple(row) for row in df.values]
+                print(insert_query)
+                cur.executemany(insert_query, values)
+                connection.commit()
     except Exception as error:
         logging.error(f"Erro no processo de insercao na {tabela}: {error}")
 

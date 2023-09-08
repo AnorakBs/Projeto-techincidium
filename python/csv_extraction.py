@@ -3,11 +3,12 @@ import os
 import logging
 from dotenv import load_dotenv #pip install python-dotenv
 from datetime import datetime
-
+import sys
 current_date = datetime.now().strftime("%Y-%m-%d")
 current_date_time = datetime.now()
 
 load_dotenv()
+start_date = sys.argv[1]
 
 log_dir= os.getenv("LOG_DIR")
 
@@ -16,13 +17,13 @@ log_file = os.path.join(log_dir,'csv_pipeline.log')
 logging.basicConfig(filename=log_file,level=logging.INFO,format='%(asctime)s - %(levelname)s - %(message)s')
 
 try:
-    directory = f'csv\\{current_date}'
+    directory = f'csv\\{start_date}'
     
     parent_dir =  os.getenv("CSV_DIR")
 
     path = os.path.join(parent_dir,directory)
     
-    file_path = os.path.join(path,f'order_details_{current_date}.csv')
+    file_path = os.path.join(path,f'order_details_{start_date}.csv')
     
 
     if not os.path.exists(path):
