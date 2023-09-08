@@ -16,25 +16,25 @@ conf_file = sys.argv[3]
 result1 = subprocess.run(["python", script_postgres, start_date, end_date, conf_file], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 if result1.returncode == 0:
-    print("First script ran successfully with arguments.")
+    print("Primeiro script rodou com sucesso.")
 else:
-    print("First script failed to run. Check Logs")
+    print("Primeiro script falhou. Check Logs")
 
 result2 = subprocess.run(["python", script_csv, start_date], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 if result2.returncode == 0:
-        print("Second script ran successfully.")
+        print("Segundo script rodou com sucesso.")
 else:
-    print("Second script failed to run. Check Logs")
+    print("Segundo script falhou. Check Logs")
 
 
 if result1.returncode == 0 and result2.returncode == 0:
-    print("Step 1 completo executando Step2...")
+    print("Step 1 completo executando Step 2...")
     result3 = subprocess.run(["python", script_mysql, start_date, end_date], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     
     if result3.returncode == 0:
-         print("Third script ran successfully.")
+         print("Terceiro script rodou com sucesso.")
     else:
-        print("Third script failed to run. Check Logs")
+        print("Terceiro script falhou. Check Logs")
 else:
-     print("Step 1 failed ending pipeline")
+     print("Step 1 falhou terminando pipeline")
