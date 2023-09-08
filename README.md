@@ -13,13 +13,13 @@ mysql.connector #pip install mysql-connector-python
 ```
 # BEFORE WE START
 
-Open the ".env" file in the python folder. In the DIRECTORIES section, before "\Projeto_techincidium", provide the absolute path of where the project is on your machine.
-Put the credentials of the POSTGRES database in the "DB_" variables found in the docker-compose.yml file in \Projeto_techincidium.
+Open the ".env" file in the python folder. In the DIRECTORIES section, before "\Projeto-techincidium", provide the absolute path of where the project is on your machine.
+Put the credentials of the POSTGRES database in the "DB_" variables found in the docker-compose.yml file in \Projeto-techincidium.
 Put the credentials of the MYSQL database in the "MY_SQL_" variables found in the docker-compose.yml file in \final_data.
 
 
 # STARTING DATABASE CONTAINERS
-In the project folder ("\Projeto_techincidium"), run the following code to create the PostgreSQL database:
+In the project folder ("\Projeto-techincidium"), run the following code to create the PostgreSQL database:
 
 
 ```
